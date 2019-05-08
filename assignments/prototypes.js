@@ -66,24 +66,33 @@ Humanoid.prototype.greet = function(){
   return `${this.name} offers a greeting in ${this.language}`
 };
 
-function Villain(villainAttributes){
-  Humanoid.call(this, villainAttributes);
-};
-
 
 //________________Villain________________
+
 function Villain(villainAttributes){
   Humanoid.call(this, villainAttributes);
-};
+  }
+
 
 Villain.prototype = Object.create(Humanoid.prototype);
 
-Villain.prototype.leech = function(){
-  return `${this.name} leeched your life-source`
+// Villain.prototype.leech = function(character){
+//   character.healthpoints = character.healPoints - 4;
+//   return `${this.name} leeched your life-source! You have ${(character.healthPoints)} health points remaining!`
+// };
+
+Villain.prototype.leech = function leech(target) {
+  target.healthPoints = target.healthPoints - 20;
+  if (target.healthPoints <= 0) {
+    return target.destroy(target);
+  } else
+    return `${target.takeDamage(target)} ${target.healthPoints} hp remaining.`;
 };
 
 
-//________________Hero_______________
+
+
+//________________Hero________________
 
 function Hero(heroAttributes){
   Humanoid.call(this, heroAttributes);
@@ -91,9 +100,15 @@ function Hero(heroAttributes){
 
 Hero.prototype = Object.create(Humanoid.prototype);
 
-Hero.prototype.valor = function(){
-  return `${this.name} raised your spirits`
+Hero.prototype.bigOldSlash = function bigOldSlash(character){
+  character.healthPoints = character.healthPoints - 7;
+  if (character.healthPoints <= 0) {
+    return character.destroy;
+    } else
+    return `A direct hit! ${character.takeDamage(character)} and only has ${character.healthPoints} hp remaining.`
 };
+
+
 
 
 /*
@@ -171,7 +186,7 @@ Hero.prototype.valor = function(){
       'Long-sword',
       'Shield',
     ],
-    language: 'English',
+    language: 'Probabaly White Guy',
   });
 
   const villain = new Villain({
@@ -185,10 +200,10 @@ Hero.prototype.valor = function(){
     name: 'MalGanis',
     team: 'The Undead',
     weapons: [
-      'Long-sword',
-      'Shield',
+      'Claws',
+      'Tail',
     ],
-    language: 'English',
+    language: 'Black Speech',
   });
 
 
@@ -202,20 +217,12 @@ Hero.prototype.valor = function(){
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-  console.log(villain.leech());
-  console.log(hero.valor());
+  console.log(hero.bigOldSlash(villain));
+  console.log(villain.leech())
 
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
-  
-
-
-  
-  
-
-
-
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result 
   //in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
