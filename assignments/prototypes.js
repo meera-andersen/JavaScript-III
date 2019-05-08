@@ -67,27 +67,6 @@ Humanoid.prototype.greet = function(){
 };
 
 
-//________________Villain________________
-
-function Villain(villainAttributes){
-  Humanoid.call(this, villainAttributes);
-  }
-
-
-Villain.prototype = Object.create(Humanoid.prototype);
-
-// Villain.prototype.leech = function(character){
-//   character.healthpoints = character.healPoints - 4;
-//   return `${this.name} leeched your life-source! You have ${(character.healthPoints)} health points remaining!`
-// };
-
-Villain.prototype.leech = function leech(target) {
-  target.healthPoints = target.healthPoints - 20;
-  if (target.healthPoints <= 0) {
-    return target.destroy(target);
-  } else
-    return `${target.takeDamage(target)} ${target.healthPoints} hp remaining.`;
-};
 
 
 
@@ -110,6 +89,27 @@ Hero.prototype.bigOldSlash = function bigOldSlash(character){
 
 
 
+//________________Villain________________
+
+function Villain(villainAttributes){
+  Humanoid.call(this, villainAttributes);
+  }
+
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+// Villain.prototype.leech = function(character){
+//   character.healthpoints = character.healPoints - 4;
+//   return `${this.name} leeched your life-source! You have ${(character.healthPoints)} health points remaining!`
+// };
+
+Villain.prototype.leech = function leech(character){
+  character.healthPoints = character.healthPoints - 7;
+  if (character.healthPoints <= 0) {
+    return character.destroy;
+    } else
+    return `A direct hit! ${character.takeDamage(character)} and only has ${character.healthPoints} hp remaining.`
+};
 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
